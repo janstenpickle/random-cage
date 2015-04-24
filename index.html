@@ -18,6 +18,17 @@
  	return(image[image_number])
  }
 // document.write("<img src='" +randomimage()+ "'>");
-document.location.href(randomimage())
+
+var rawResponse = 'PNG'; // This is your response object
+var encodedResponse = btoa(rawResponse);
+
+var img = new Image();
+var container = document.getElementById('newImg');
+
+img.src = 'data:image/gif;base64,' + encodedResponse;
+
+img.onload = function() {
+container.appendChild( img );
+};
 //-->
 </script>
