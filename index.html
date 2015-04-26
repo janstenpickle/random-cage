@@ -19,16 +19,42 @@
  }
 // document.write("<img src='" +randomimage()+ "'>");
 
-var rawResponse = 'PNG'; // This is your response object
-var encodedResponse = btoa(rawResponse);
+function getImageDataURL(url, success, error) {
+    var data, canvas, ctx;
+    var img = new Image();
+    img.crossOrigin="anonymous";
+    img.onload = function(){
+        // Create the canvas element.
+        canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        // Get '2d' context and draw the image.
+        ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        // Get canvas data URL
+        try{
+            data = canvas.toDataURL();
+            success({image:img, data:data});
+        }catch(e){
+            error(e);
+        }
+    }
+    // Load image URL.
+    try{
+        img.src = url;
+    }catch(e){
+        error(e);
+    }
+}
 
-var img = new Image();
-var container = document.getElementById('newImg');
+ var onSuccess = function(e){
+  document.body.appendChild(e.image);
+ };
 
-img.src = 'data:image/gif;base64,' + encodedResponse;
+ var onError = function(e){
+  alert(e.message);
+ };
 
-img.onload = function() {
-container.appendChild( img );
-};
-//-->
+getImageDataURL(randomimage(), onSuccess, onError);
+
 </script>
