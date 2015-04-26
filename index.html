@@ -48,7 +48,7 @@ function getImageDataURL(url, success, error) {
 }
 
  var onSuccess = function(e){
-  document.body.appendChild(e.image);
+  window.location = e.data
  };
 
  var onError = function(e){
